@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class WhatsappAuthServiceApplication {
+public class WhatsappMessagingServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(WhatsappAuthServiceApplication.class, args);
+		SpringApplication.run(WhatsappMessagingServiceApplication.class, args);
 	}
 
 }
