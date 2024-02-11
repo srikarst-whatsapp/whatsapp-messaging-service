@@ -12,7 +12,7 @@
 	<artifactId>whatsapp-messaging-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>whatsapp-messaging-service</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Whatsapp Messaging Service</description>
 	<properties>
 		<java.version>21</java.version>
 	</properties>
