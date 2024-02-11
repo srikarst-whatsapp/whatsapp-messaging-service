@@ -1,45 +1,47 @@
 package com.whatsapp.whatsappmessagingservice.service;
 
-import java.util.List;
 import java.util.Optional;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.whatsapp.whatsappmessagingservice.entity.User;
-import com.whatsapp.whatsappmessagingservice.exception.UserNotFoundException;
+import com.whatsapp.whatsappmessagingservice.exception.EntityNotFoundException;
 import com.whatsapp.whatsappmessagingservice.repository.UserRepository;
 
 import lombok.AllArgsConstructor;
 
-@AllArgsConstructor
 @Service
+@AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    UserRepository userRepository;
+    private UserRepository userRepository;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @SuppressWarnings("null")
-    @Override
-    public User saveUser(User user) {
-        return userRepository.save(user);
-    }
-
-    @SuppressWarnings("null")
     @Override
     public User getUser(Long id) {
+        @SuppressWarnings("null")
         Optional<User> user = userRepository.findById(id);
-        User unwrappedUser = UserServiceImpl.unwrapUser(user, id);
-        return unwrappedUser;
+        return unwrapUser(user, id);
     }
 
     @Override
-    public List<User> getUsers() {
-        return (List<User>) userRepository.findAll();
+    public User getUser(String username) {
+        Optional<User> user = userRepository.findByUsername(username);
+        return unwrapUser(user, 404L);
+    }
+
+    @Override
+    public User saveUser(User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        return userRepository.save(user);
     }
 
     static User unwrapUser(Optional<User> entity, Long id) {
         if (entity.isPresent())
             return entity.get();
         else
-            throw new UserNotFoundException(id);
+            throw new EntityNotFoundException(id, User.class);
     }
+
 }
