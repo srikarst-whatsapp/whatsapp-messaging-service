@@ -1,6 +1,10 @@
 package com.whatsapp.whatsappmessagingservice.consumer;
 
+import org.springframework.messaging.Message;
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.whatsapp.whatsappmessagingservice.dto.QueueMessage;
 
 import io.awspring.cloud.sqs.annotation.SqsListener;
 import lombok.extern.slf4j.Slf4j;
@@ -9,7 +13,12 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class Consumer {
     @SqsListener("process-message.fifo")
-    public void recieveMessage(String stringJson) throws InterruptedException {
-        log.info("Message Received using SQS Listner " + stringJson);
+    public void recieveMessage(Message<String> SqsObject) throws InterruptedException {
+        try {
+            QueueMessage receivedQueueMessage = new ObjectMapper().reader().forType(QueueMessage.class)
+                    .readValue(SqsObject.getPayload());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
