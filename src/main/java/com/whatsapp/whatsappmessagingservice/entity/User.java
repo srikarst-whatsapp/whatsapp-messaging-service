@@ -2,8 +2,6 @@ package com.whatsapp.whatsappmessagingservice.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
@@ -23,8 +21,9 @@ import lombok.Setter;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @NotBlank(message = "Phone number cannot be blank")
+    @NonNull
+    private String phone;
 
     @NotBlank(message = "username cannot be blank")
     @NonNull

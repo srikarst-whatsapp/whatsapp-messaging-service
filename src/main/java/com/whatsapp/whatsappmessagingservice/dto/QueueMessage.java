@@ -1,16 +1,25 @@
 package com.whatsapp.whatsappmessagingservice.dto;
 
+import java.time.LocalDateTime;
+
+import jakarta.validation.constraints.Past;
 import lombok.*;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class QueueMessage extends BaseMessage {
 
-    public String id;
-    public Long chatId;
-    public String body;
-    public Long sender;
-    public String status;
+    public QueueMessage(BaseMessage baseMessage) {
+        super(baseMessage);
+    }
+
+    @NonNull
+    private String sender;
+
+    private final String status = "SENT";
+
+    @Past(message = "The created time must be in the past")
+    @NonNull
+    private final LocalDateTime createdTimestamp = LocalDateTime.now();
 }

@@ -25,14 +25,4 @@ public class MessageController {
     MessageService messageService;
     ChatService chatService;
 
-    @GetMapping("/sender/{senderId}/receiver/{receiverId}")
-    public ResponseEntity<List<Message>> getMessagesInChat(@PathVariable Long senderId, @PathVariable Long receiverId) {
-        return new ResponseEntity<>(chatService.getMessagesInChat(senderId, receiverId), HttpStatus.OK);
-    }
-
-    @PostMapping("/sender/{senderId}/receiver/{receiverId}")
-    public ResponseEntity<Message> sendMessage(@Valid @RequestBody Message message, @PathVariable Long senderId,
-            @PathVariable Long receiverId) {
-        return new ResponseEntity<>(messageService.addMessageToChat(message, senderId, receiverId), HttpStatus.CREATED);
-    }
 }

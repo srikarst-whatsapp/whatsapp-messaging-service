@@ -24,24 +24,4 @@ public class MessageServiceImpl implements MessageService {
 
     ChatService chatService;
 
-    @Override
-    public List<Message> getMessages(Long senderId, Long receiverId) {
-        Chat chat = chatService.getUnwrappedChat(senderId, receiverId);
-        return chat.getMessages();
-    }
-
-    @Override
-    public Message addMessageToChat(Message message, Long senderId, Long receiverId) {
-        @SuppressWarnings("null")
-        Optional<User> sender = userRepository.findById(senderId);
-        User unwrappedSender = UserServiceImpl.unwrapUser(sender, senderId);
-        @SuppressWarnings("null")
-        Optional<User> receiver = userRepository.findById(receiverId);
-        User unwrappedReceiver = UserServiceImpl.unwrapUser(receiver, receiverId);
-        Optional<Chat> chat = chatService.getChat(senderId, receiverId);
-        message.setSender(unwrappedSender);
-        message.setReceiver(unwrappedReceiver);
-        chatService.addMessageToChat(chat, unwrappedSender, unwrappedReceiver, message);
-        return message;
-    }
 }

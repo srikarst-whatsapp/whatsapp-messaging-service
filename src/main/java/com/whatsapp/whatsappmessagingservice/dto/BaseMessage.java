@@ -20,7 +20,7 @@ public class BaseMessage {
     private String id;
 
     @NonNull
-    private Long chatId;
+    private String chatId;
 
     @NotBlank(message = "Body cannot be blank")
     @NonNull

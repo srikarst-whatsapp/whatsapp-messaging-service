@@ -17,6 +17,7 @@ public class Consumer {
         try {
             QueueMessage receivedQueueMessage = new ObjectMapper().reader().forType(QueueMessage.class)
                     .readValue(SqsObject.getPayload());
+            log.info(new ObjectMapper().writeValueAsString(receivedQueueMessage));
         } catch (Exception e) {
             e.printStackTrace();
         }
