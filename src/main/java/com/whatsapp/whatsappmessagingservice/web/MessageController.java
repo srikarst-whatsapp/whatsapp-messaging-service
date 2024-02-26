@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.whatsapp.whatsappmessagingservice.dto.UserMessage;
 import com.whatsapp.whatsappmessagingservice.entity.Message;
 import com.whatsapp.whatsappmessagingservice.service.ChatService;
 import com.whatsapp.whatsappmessagingservice.service.MessageService;
@@ -23,6 +24,12 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/message")
 public class MessageController {
     MessageService messageService;
-    ChatService chatService;
+
+    @PostMapping("/receiver/{receiverPhone}")
+    public ResponseEntity<HttpStatus> postMessageToChat(@Valid @RequestBody UserMessage message,
+            @PathVariable String receiverPhone) {
+        messageService.postMessageToChat(receiverPhone, message);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
 
 }

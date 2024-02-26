@@ -17,9 +17,12 @@ public class QueueMessage extends BaseMessage {
     @NonNull
     private String sender;
 
-    private final String status = "SENT";
-
-    @Past(message = "The created time must be in the past")
     @NonNull
-    private final LocalDateTime createdTimestamp = LocalDateTime.now();
+    private String chatId;
+
+    // private final String status = "SENT";
+
+    // @Past(message = "The created time must be in the past")
+    // @NonNull
+    // private final LocalDateTime createdTimestamp = LocalDateTime.now();
 }

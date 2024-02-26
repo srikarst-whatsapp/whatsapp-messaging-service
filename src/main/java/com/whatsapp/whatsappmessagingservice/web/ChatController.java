@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.whatsapp.whatsappmessagingservice.dto.UserMessage;
 import com.whatsapp.whatsappmessagingservice.entity.Message;
 import com.whatsapp.whatsappmessagingservice.service.ChatService;
 
@@ -22,7 +23,7 @@ public class ChatController {
     ChatService chatService;
 
     @PostMapping("/receiver/{receiverPhone}")
-    public ResponseEntity<HttpStatus> createUser(@Valid @RequestBody Message message,
+    public ResponseEntity<HttpStatus> saveChat(@Valid @RequestBody UserMessage message,
             @PathVariable String receiverPhone) {
         chatService.saveChat(receiverPhone, message);
         return new ResponseEntity<>(HttpStatus.CREATED);
