@@ -1,8 +1,6 @@
 package com.whatsapp.whatsappmessagingservice.dto;
 
-import java.time.LocalDateTime;
-
-import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 @Getter
@@ -10,19 +8,15 @@ import lombok.*;
 @NoArgsConstructor
 public class QueueMessage extends BaseMessage {
 
-    public QueueMessage(BaseMessage baseMessage) {
-        super(baseMessage);
-    }
-
+    @NotBlank(message = "Sender cannot be blank")
     @NonNull
     private String sender;
 
+    @NotBlank(message = "ChatId cannot be blank")
     @NonNull
     private String chatId;
 
-    // private final String status = "SENT";
-
-    // @Past(message = "The created time must be in the past")
-    // @NonNull
-    // private final LocalDateTime createdTimestamp = LocalDateTime.now();
+    @NotBlank(message = "CreatedTimestamp cannot be blank")
+    @NonNull
+    private String createdTimestamp;
 }

@@ -19,7 +19,7 @@ import lombok.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "message")
-public class Message {
+public class ChatMessage {
 
     @Id
     @NotBlank(message = "Id cannot be blank")
@@ -38,16 +38,16 @@ public class Message {
 
     @NonNull
     @ManyToOne(optional = false)
-    @JoinColumn(name = "sender_id", referencedColumnName = "phone")
+    @JoinColumn(name = "sender_phone", referencedColumnName = "phone")
     private User sender;
 
     @NotBlank(message = "Status cannot be blank")
     @NonNull
     @Column(name = "status", nullable = false)
-    private String status = "SENT";
+    private String status;
 
     @Past(message = "The created time must be in the past")
     @NonNull
     @Column(name = "created_timestamp", nullable = false)
-    private final LocalDateTime createdTimestamp = LocalDateTime.now();
+    private LocalDateTime createdTimestamp;
 }

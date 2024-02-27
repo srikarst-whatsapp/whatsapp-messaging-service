@@ -40,10 +40,10 @@ public class Chat {
     @JsonIgnore
     @OneToMany(mappedBy = "chat", cascade = CascadeType.ALL)
     @OrderBy("createdTimestamp DESC")
-    private List<Message> messages;
+    private List<ChatMessage> messages;
 
     @NonNull
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "latest_message_id", referencedColumnName = "id")
-    private Message latestMessage;
+    private ChatMessage latestMessage;
 }

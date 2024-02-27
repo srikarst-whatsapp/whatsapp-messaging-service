@@ -5,22 +5,27 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.whatsapp.whatsappmessagingservice.dto.QueueMessage;
-import com.whatsapp.whatsappmessagingservice.service.MessageService;
+import com.whatsapp.whatsappmessagingservice.entity.ChatMessage;
+import com.whatsapp.whatsappmessagingservice.service.ChatMessageService;
+import com.whatsapp.whatsappmessagingservice.service.NewChatMessageFactory;
 
 import io.awspring.cloud.sqs.annotation.SqsListener;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 @Component
 public class Consumer {
-    MessageService messageService;
+    ChatMessageService chatMessageService;
+    NewChatMessageFactory newChatMessageFactory;
 
     @SqsListener("process-message.fifo")
     public void recieveMessage(Message<String> SqsObject) throws InterruptedException {
         try {
             QueueMessage receivedQueueMessage = new ObjectMapper().reader().forType(QueueMessage.class)
                     .readValue(SqsObject.getPayload());
-            log.info(new ObjectMapper().writeValueAsString(receivedQueueMessage));
+            ChatMessage message = newChatMessageFactory.getNewChatMessage(receivedQueueMessage);
+            chatMessageService.postMessageToChat(message);
         } catch (Exception e) {
             e.printStackTrace();
         }
