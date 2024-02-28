@@ -3,6 +3,8 @@ package com.whatsapp.whatsappmessagingservice.entity;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -27,6 +29,7 @@ public class ChatMessage {
     private String id = UUID.randomUUID().toString();
 
     @NonNull
+    @JsonIgnore
     @ManyToOne(optional = false)
     @JoinColumn(name = "chat_id", referencedColumnName = "id")
     private Chat chat;

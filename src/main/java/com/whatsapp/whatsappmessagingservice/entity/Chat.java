@@ -32,7 +32,6 @@ public class Chat {
     private String id = UUID.randomUUID().toString();
 
     @NonNull
-    @JsonIgnore
     @ManyToMany
     private List<User> participants;
 
